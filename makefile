@@ -12,7 +12,7 @@ LD = $(CROSS)ld
 
 default: all
 
-all: clean split rom.z64
+all: rom.z64
 
 vpath %.s $(ASMDIRS)
 
@@ -23,7 +23,7 @@ rom.elf: $(ASMOBJECTS)
 	$(LD) -Map gexenterthegecko.map $(ASMOBJECTS) -T gexenterthegecko.ld -T undefined_funcs_auto.txt -T undefined_syms_auto.txt -o $@ > log.txt
 
 split:
-	cmd.exe /c splat split gexenterthegecko.yaml
+	splat split gexenterthegecko.yaml
 
 rom.z64: rom.elf
 	$(OBJCOPY) -O binary --pad-to 0x1000000 rom.elf rom.z64
@@ -31,7 +31,7 @@ rom.z64: rom.elf
 build: rom.z64
 
 diff:
-	cmd.exe /c py diffcheck.py
+	python3 diffcheck.py
 
 clean:
 	rm -rf build/

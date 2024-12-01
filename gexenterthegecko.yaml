@@ -47,6 +47,8 @@ options:
   # libultra_symbols: True
   # hardware_regs: True
   gfx_ucode: f3dex # one of [f3d, f3db, f3dex, f3dexb, f3dex2]
+
+  symbol_name_format: $VRAM_$ROM
 segments:
   - name: header
     type: header
@@ -60,6 +62,7 @@ segments:
     type: code
     start: 0x1000
     vram: 0x80000400
+    symbol_name_format: $VRAM
     subsegments:
       - [0x1000, hasm]
 
@@ -69,6 +72,7 @@ segments:
     vram: 0x80000450
     follows_vram: entry
     bss_size: 0xDA3E0
+    symbol_name_format: $VRAM
     subsegments:
       - [0x1050, asm, _1050]
       - [0x7FB0, asm, _7fb0]
@@ -234,7 +238,7 @@ segments:
       - [0x6B470, asm]
       - [0x6B490, asm]
       - [0x6B5F0, asm]
-      - [0x6B6F0, asm]
+      - [0x6B6F0, textbin]
       - [0x6B920, data]
       - [0x7C040, rodata, _1050]
       - [0x7C3B0, rodata, _7fb0]
@@ -333,7 +337,7 @@ segments:
     bss_size: 0x75AE0
     subsegments:
       - [0x9CF50, asm, _9cf50]
-      - [0xA8464, rodata, _9cf50]
+      - [0xA8460, rodata, _9cf50]
       - { type: bss, 0x80164D20 }
 
   - name: intro_code
@@ -485,6 +489,7 @@ segments:
     start: 0xED0F0
     vram: 0x801DA800
 #     follows_vram: logo_code
+    exclusive_ram_id: extra_functions
     subsegments:
       - [0xED0F0, asm, _ed0f0]
       - [0xEEE40, rodata, _ed0f0]
